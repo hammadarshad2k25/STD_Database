@@ -20,10 +20,10 @@ jobs:
         dotnet-version: '9.0.x'
 
     - name: Restore dependencies
-      run: dotnet restore STDD_Database/STD_Database/STD_Database.csproj
+      run: dotnet restore STD_Database/STD_Database.csproj
 
     - name: Build project
-      run: dotnet build STDD_Database/STD_Database/STD_Database.csproj --no-restore --configuration Release
+      run: dotnet build STD_Database/STD_Database.csproj --no-restore --configuration Release
 
     - name: Run tests
-      run: dotnet test STDD_Database/STD_Database/STD_Database.csproj --no-build --verbosity normal
+      run: dotnet test STD_Database.Tests/STD_Database.Tests.csproj --no-build --verbosity normal
