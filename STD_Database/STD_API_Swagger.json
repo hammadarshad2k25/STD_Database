@@ -1,0 +1,564 @@
+{
+  "openapi": "3.0.4",
+  "info": {
+    "title": "STD_Database 1.0",
+    "description": "API Version 1.0 - STD_Database with JWT + Redis",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/v1/StudentControllerDapper/Add-Student-Dapper": {
+      "post": {
+        "tags": [
+          "StudentControllerDapper"
+        ],
+        "summary": "Adds a new student using Dapper.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudentModelDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudentModelDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudentModelDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/StudentControllerDapper/Display-Students-Dapper": {
+      "get": {
+        "tags": [
+          "StudentControllerDapper"
+        ],
+        "summary": "Retrieves all students using Dapper.",
+        "parameters": [
+          {
+            "name": "IncludeCourse",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/StudentControllerDapper/Search-Student-By-RollNumber-Dapper/{rollnumber}": {
+      "get": {
+        "tags": [
+          "StudentControllerDapper"
+        ],
+        "summary": "Searches a student by roll number using Dapper.",
+        "parameters": [
+          {
+            "name": "rollnumber",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "IncludeCourse",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/StudentControllerDapper/Update-Student-Dapper/{rollnumber}": {
+      "put": {
+        "tags": [
+          "StudentControllerDapper"
+        ],
+        "summary": "Updates student record using Dapper.",
+        "parameters": [
+          {
+            "name": "rollnumber",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudentModelDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudentModelDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudentModelDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/StudentControllerDapper/Delete-Student-Dapper/{rollnumber}": {
+      "delete": {
+        "tags": [
+          "StudentControllerDapper"
+        ],
+        "summary": "Deletes a student using Dapper.",
+        "parameters": [
+          {
+            "name": "rollnumber",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/StudentControllerEF/Add-Student": {
+      "post": {
+        "tags": [
+          "StudentControllerEF"
+        ],
+        "summary": "Adds a new student to the database.",
+        "requestBody": {
+          "description": "Student details to be added.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudentModelDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudentModelDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudentModelDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/StudentControllerEF/Display-Students": {
+      "get": {
+        "tags": [
+          "StudentControllerEF"
+        ],
+        "summary": "Retrieves all students (optionally includes courses).",
+        "parameters": [
+          {
+            "name": "IncludeCourse",
+            "in": "query",
+            "description": "Include course details if true.",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/StudentControllerEF/Paged": {
+      "get": {
+        "tags": [
+          "StudentControllerEF"
+        ],
+        "summary": "Retrieves paginated student records.",
+        "parameters": [
+          {
+            "name": "Page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "SortBy",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "default": "Name"
+            }
+          },
+          {
+            "name": "Order",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "default": "asc"
+            }
+          },
+          {
+            "name": "Degree",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/StudentControllerEF/Search-Student-By-RollNumber/{rollnumber}": {
+      "get": {
+        "tags": [
+          "StudentControllerEF"
+        ],
+        "summary": "Searches for a student by Roll Number.",
+        "parameters": [
+          {
+            "name": "rollnumber",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "IncludeCourse",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/StudentControllerEF/Update-Student/{rollnumber}": {
+      "put": {
+        "tags": [
+          "StudentControllerEF"
+        ],
+        "summary": "Updates an existing student.",
+        "parameters": [
+          {
+            "name": "rollnumber",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudentModelDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudentModelDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudentModelDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/StudentControllerEF/Delete-Student/{rollnumber}": {
+      "delete": {
+        "tags": [
+          "StudentControllerEF"
+        ],
+        "summary": "Deletes a student by Roll Number.",
+        "parameters": [
+          {
+            "name": "rollnumber",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/UserAuthentication/Login": {
+      "post": {
+        "tags": [
+          "UserAuthentication"
+        ],
+        "summary": "Authenticates a user and generates JWT + refresh token.",
+        "requestBody": {
+          "description": "Login credentials (username and password).",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/UserAuthentication/RefreshToken": {
+      "post": {
+        "tags": [
+          "UserAuthentication"
+        ],
+        "summary": "Generates a new access token using a valid refresh token.",
+        "requestBody": {
+          "description": "The expired access token and refresh token.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TokenDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TokenDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TokenDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/UserAuthentication/test-bcrypt": {
+      "get": {
+        "tags": [
+          "UserAuthentication"
+        ],
+        "summary": "Verifies a bcrypt password hash (for testing only).",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/UserAuthentication/generate-hash": {
+      "get": {
+        "tags": [
+          "UserAuthentication"
+        ],
+        "summary": "Generates a new bcrypt hash (for testing only).",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CourseModelDTO": {
+        "type": "object",
+        "properties": {
+          "coursename": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "LoginDTO": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "StudentModelDTO": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "rollnumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "degree": {
+            "type": "string",
+            "nullable": true
+          },
+          "semester": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "cgpa": {
+            "type": "number",
+            "format": "double"
+          },
+          "courses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CourseModelDTO"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TokenDTO": {
+        "type": "object",
+        "properties": {
+          "accessToken": {
+            "type": "string",
+            "nullable": true
+          },
+          "refreshToken": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "apiKey",
+        "description": "Enter Token Here Like Bearer <Your_Token>",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "Bearer": [ ]
+    }
+  ],
+  "tags": [
+    {
+      "name": "StudentControllerDapper",
+      "description": "Handles all student operations using Dapper."
+    },
+    {
+      "name": "StudentControllerEF",
+      "description": "Handles all student operations using Entity Framework (EF Core)."
+    }
+  ]
+}

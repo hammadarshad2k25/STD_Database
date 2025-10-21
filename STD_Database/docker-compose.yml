@@ -1,0 +1,47 @@
+services:
+  sqldb:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=YourStrongPassword123!
+    ports:
+      - "1433:1433"   # SQL Server exposed
+    networks:
+      - student-net
+
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    ports:
+      - "6379:6379"   # Redis exposed for external tools
+    networks:
+      - student-net
+
+  student-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: student-api
+    ports:
+      - "5241:5000"   # Only HTTP exposed
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=sqldb,1433;Database=StudentDB;User Id=sa;Password=YourStrongPassword123!;TrustServerCertificate=True;
+      - Redis__ConnectionString=redis:6379
+      - DOTNET_URLS=http://+:5000
+    depends_on:
+      - sqldb
+      - redis
+    networks:
+      - student-net
+    # Wait for SQL before starting API
+    command: >
+      sh -c "echo 'Waiting for SQL Server...' && sleep 15 &&
+             until nc -z sqldb 1433; do echo 'Still waiting for SQL...'; sleep 2; done;
+             echo 'SQL is ready, starting API...' &&
+             dotnet STD_Database.dll"
+
+networks:
+  student-net:
+    driver: bridge

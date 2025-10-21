@@ -1,0 +1,6 @@
+@STD_Database_HostAddress = http://localhost:5241
+
+GET {{STD_Database_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
