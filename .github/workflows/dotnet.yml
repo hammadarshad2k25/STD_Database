@@ -9,9 +9,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: STD_Database   # 👈 Ensures all commands run inside this folder
 
     steps:
     - name: Checkout code
@@ -23,10 +20,10 @@ jobs:
         dotnet-version: '9.0.x'
 
     - name: Restore dependencies
-      run: dotnet restore STD_Database.csproj
+      run: dotnet restore STDD_Database/STD_Database/STD_Database.csproj
 
     - name: Build project
-      run: dotnet build STD_Database.csproj --no-restore --configuration Release
+      run: dotnet build STDD_Database/STD_Database/STD_Database.csproj --no-restore --configuration Release
 
     - name: Run tests
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test STDD_Database/STD_Database/STD_Database.csproj --no-build --verbosity normal
